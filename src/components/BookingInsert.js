@@ -124,7 +124,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
       <div className="rounded-sm bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <form onSubmit={handleSubmit} ref={ref} className="p-6.5 pt-1">
           <div className="grid grid-cols-3">
-            <div className="col-span-2 border-2 border-t-0 border-b-0 border-l-0 border-red-600 px-12">
+            <div className="col-span-2 border-2 border-t-0 border-b-0 border-l-0 border-blue-600 px-12">
               {/* START Left Side */}
               {/* Client Name */}
               <div className="w-full mb-4">

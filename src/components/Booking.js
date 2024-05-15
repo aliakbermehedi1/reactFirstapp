@@ -19,7 +19,7 @@ const Booking = () => {
 
   // delete
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  const [branchIdToDelete, setBranchIdToDelete] = useState(null);
+  const [clientIdToDelete, setClientIDToDelete] = useState(null);
 
   // Here Start
   const [clientsData, setClientsData] = useState([]);
@@ -54,7 +54,7 @@ const Booking = () => {
       const response = await axios.get(
         `http://localhost:5231/api/BookingEntries/GetClientById/${clientId}`
       );
-      setShowDialog1(true)
+      setShowDialog1(true);
 
       setUpdateData(response.data);
     } catch (error) {
@@ -64,21 +64,21 @@ const Booking = () => {
 
   // handle Delete
   const handleDeleteClick = (branch) => {
-    setBranchIdToDelete(branch); // Store the BranchID that needs to be deleted
+    setClientIDToDelete(branch); // Store the BranchID that needs to be deleted
     setShowConfirmationDialog(true); // Show the confirmation dialog
   };
 
   const confirmDelete = async () => {
     try {
-      const response = await axios.put(
-        "https://arabian-hunter-backend.vercel.app/api/branch/DeleteBranch",
-        { BranchID: branchIdToDelete }
+      const response = await axios.delete(
+        "http://localhost:5231/api/BookingEntries/Delete/",
+        { clientID: clientIdToDelete }
       );
-
-      if (response.data.success) {
+  
+      if (response.status === 200) {
         fetchandGetClients();
         setShowConfirmationDialog(false); // Close the confirmation dialog
-
+  
         // Display a success toast message
         toast.success("Deleted Successfully", {
           position: "top-right",
@@ -90,12 +90,15 @@ const Booking = () => {
           progress: undefined,
         });
       } else {
-        console.error("Failed to delete branch:", response.data.message);
+        console.error("Failed to delete booking entry. Status:", response.status);
+        // You can display an error message here if needed
       }
     } catch (error) {
-      console.error("Error deleting branch:", error);
+      console.error("Error deleting booking entry:", error);
+      // You can display an error message here if needed
     }
   };
+  
 
   // Step 2: Modify rendering to filter Clients based on search
   const filteredClients = clientsData
@@ -123,7 +126,7 @@ const Booking = () => {
     <>
       <div className="text-xs mx-20 mt-8">
         <div className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-2 border border-tableBorder bg-white">
-          <div className="ml-1">
+          <div className="ml-3">
             <Button
               className="font-semibold inline-flex items-center justify-center gap-2.5 rounded-lg bg-green-600 py-2 px-10 text-center text-white hover:bg-opacity-90 lg:px-8 xl:px-4"
               onClick={() => setShowDialog(true)}
@@ -217,7 +220,7 @@ const Booking = () => {
                         <div className="flex justify-center items-center py-2">
                           <Button
                             className="font-semibold gap-2.5 rounded-lg bg-red-500 text-white py-2 px-4"
-                            onClick={() => handleDeleteClick(clients.BranchID)}
+                            onClick={() => handleDeleteClick(clients.clientId)}
                           >
                             <span>
                               <i
@@ -265,16 +268,17 @@ const Booking = () => {
             </tbody>
           </table>
         </div>
+        {clientsData && (
+          <Paginator
+            first={first}
+            rows={rows}
+            totalRecords={clientsData.length}
+            rowsPerPageOptions={[5, 10, 20]}
+            onPageChange={onPageChange}
+            className="bg-gray-100"
+          />
+        )}
       </div>
-      {clientsData && (
-        <Paginator
-          first={first}
-          rows={rows}
-          totalRecords={clientsData.length}
-          rowsPerPageOptions={[5, 10, 20]}
-          onPageChange={onPageChange}
-        />
-      )}
 
       {/* start insert dialog */}
       <Dialog
@@ -314,21 +318,43 @@ const Booking = () => {
       <Dialog
         visible={showConfirmationDialog}
         onHide={() => setShowConfirmationDialog(false)}
-        header="Are you sure to delete Branch?"
+        header="Are you sure to delete Client?"
         footer={
           <div className="flex items-center justify-center">
             <Button
               label="No"
               icon="pi pi-times"
               className="p-button-text bg-danger text-white py-3 px-8 mr-4 text-lg"
-              onClick={() => setShowConfirmationDialog(false)}
+              
             />
+
             <Button
-              label="Yes"
-              icon="pi pi-check"
-              className="p-button-text bg-success text-white py-3 px-8 mr-4 text-lg"
+              className="font-semibold gap-2.5 rounded-lg bg-red-500 text-white py-2 px-4"
+              onClick={() => setShowConfirmationDialog(false)}
+            >
+              <span>
+                <i
+                  className="pi pi-times font-semibold"
+                  style={{ fontSize: "12px" }}
+                ></i>
+              </span>
+              NO
+            </Button>
+
+            <Button
+              className="font-semibold gap-2.5 rounded-lg bg-green-500 text-white py-2 px-4 ml-3"
               onClick={confirmDelete}
-            />
+            >
+              <span>
+                <i
+                  className="pi pi-check font-semibold"
+                  style={{ fontSize: "12px" }}
+                ></i>
+              </span>
+              YES
+            </Button>
+
+          
           </div>
         }
       ></Dialog>

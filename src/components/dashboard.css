@@ -1,0 +1,95 @@
+.custom-container {
+    margin: 20px;
+  }
+  
+  .custom-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .custom-button {
+    display: flex;
+  }
+  
+  .custom-primary-button,
+  .custom-secondary-button {
+    font-weight: 600;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+  
+  .custom-search {
+    position: relative;
+  }
+  
+  .custom-input {
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .custom-search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
+  .custom-table {
+    overflow-x: auto;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-table-inner {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table-inner td {
+    border: 1px solid #ccc;
+  }
+  
+  .custom-client-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .custom-client-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-client-image {
+    max-width: 40px;
+    max-height: 40px;
+    margin-right: 10px;
+  }
+  
+  .custom-buttons button {
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  
+  .custom-booking-details {
+    background-color: #fff;
+    margin-top: 10px;
+  }
+  
+  .custom-booking-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-booking-table th,
+  .custom-booking-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
