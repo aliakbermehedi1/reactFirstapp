@@ -71,14 +71,13 @@ const Booking = () => {
   const confirmDelete = async () => {
     try {
       const response = await axios.delete(
-        "http://localhost:5231/api/BookingEntries/Delete/",
-        { clientID: clientIdToDelete }
+        `http://localhost:5231/api/BookingEntries/Delete/${clientIdToDelete}`
       );
-  
+
       if (response.status === 200) {
         fetchandGetClients();
         setShowConfirmationDialog(false); // Close the confirmation dialog
-  
+
         // Display a success toast message
         toast.success("Deleted Successfully", {
           position: "top-right",
@@ -90,7 +89,10 @@ const Booking = () => {
           progress: undefined,
         });
       } else {
-        console.error("Failed to delete booking entry. Status:", response.status);
+        console.error(
+          "Failed to delete booking entry. Status:",
+          response.status
+        );
         // You can display an error message here if needed
       }
     } catch (error) {
@@ -98,7 +100,6 @@ const Booking = () => {
       // You can display an error message here if needed
     }
   };
-  
 
   // Step 2: Modify rendering to filter Clients based on search
   const filteredClients = clientsData
@@ -325,7 +326,6 @@ const Booking = () => {
               label="No"
               icon="pi pi-times"
               className="p-button-text bg-danger text-white py-3 px-8 mr-4 text-lg"
-              
             />
 
             <Button
@@ -353,8 +353,6 @@ const Booking = () => {
               </span>
               YES
             </Button>
-
-          
           </div>
         }
       ></Dialog>

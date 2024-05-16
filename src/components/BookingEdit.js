@@ -5,7 +5,7 @@ import { MdOutlineCancel } from "react-icons/md";
 
 const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
   const [spotID, setSpotID] = useState([]);
-  const [picturePreview, setPicturePreview] = useState(updateData.picture); // Store the picture preview URL
+  const [picturePreview, setPicturePreview] = useState([]); // Store the picture preview URL
 
   const [formData, setFormData] = useState({
     ClientId: updateData.clientId,
@@ -65,25 +65,52 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData(ref.current);
+
+    // Extracting SpotName values from the form data
+
+    formData.set("ClientId", updateData?.clientId);
+
     try {
       const response = await axios.put(
-        `http://localhost:5231/api/BookingEntries/${formData.ClientId}`,
-        formData
+        "http://localhost:5231/api/BookingEntries",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
+      console.log("Response:", response.data);
       if (response.status === 200) {
-        toast.success("Booking updated successfully!");
+        console.log("Booking inserted successfully!", response.data);
+
+        // Display a success toast message
+        toast.success("Booking inserted successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         onHide();
         fetchandGetClients();
       } else {
-        console.error("Error updating booking:", response.data);
-        toast.error("Failed to update booking!");
+        // Handle unsuccessful response
+        console.error("Error inserting booking:", response.data);
+        toast.error("Failed to insert booking!");
       }
     } catch (error) {
-      console.error("Error updating booking:", error);
-      toast.error("Failed to update booking!");
+      console.error("Error inserting booking:", error);
+
+      // Handle the error scenario (e.g., show an error toast, alert, etc.)
+      toast.error("Failed to insert booking!");
     }
   };
+
 
   const fetchSpotDropdown = async () => {
     try {
@@ -194,7 +221,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
                       <img
                         src={picturePreview}
                         alt="Client Picture"
-                        className="max-w-full h-auto"
+                        className="w-40 h-40"
                       />
                       {/* Button to remove the image */}
                       <button
@@ -202,7 +229,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
                         onClick={() => setPicturePreview(null)}
                         className="ml-2 text-red-600 hover:text-red-800"
                       >
-                      <MdOutlineCancel />
+                        <MdOutlineCancel />
                       </button>
                     </div>
                   )}
