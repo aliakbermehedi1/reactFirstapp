@@ -64,8 +64,8 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
       );
 
       console.log("Response:", response.data);
-      if (response.status === 200) {
-        console.log("Booking inserted successfully!", response.data);
+      if (response.data !== 0) {
+        console.log("Booking inserted successfully!");
 
         // Display a success toast message
         toast.success("Booking inserted successfully!", {

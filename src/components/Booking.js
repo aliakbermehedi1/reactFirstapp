@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import BookingInsert from "./BookingInsert";
 import { IoIosSearch } from "react-icons/io";
 import BookingEdit from "./BookingEdit";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Booking = () => {
   const navigate = useNavigate(); // Get the navigate function
@@ -73,8 +74,9 @@ const Booking = () => {
       const response = await axios.delete(
         `http://localhost:5231/api/BookingEntries/Delete/${clientIdToDelete}`
       );
+      console.log("response.data", response.data)
 
-      if (response.status === 200) {
+      if (response.data !== 0) {
         fetchandGetClients();
         setShowConfirmationDialog(false); // Close the confirmation dialog
 
@@ -183,7 +185,7 @@ const Booking = () => {
                       <div className="flex justify-center items-center gap-6">
                         <div className="px-8 py-2">
                           <img
-                            src={clients.picture}
+                            src={`http://localhost:5231/Images/${clients.picture}`}
                             alt="Client"
                             style={{ maxWidth: "40px", maxHeight: "40px" }}
                           />

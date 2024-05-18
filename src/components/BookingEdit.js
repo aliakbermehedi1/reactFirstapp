@@ -15,18 +15,12 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
       : "", // Convert birthDate to correct format
     PhoneNo: updateData.phoneNo,
     MaritalStatus: updateData.maritalStatus,
-    PictureFile: updateData.picture,
+    // PictureFile: updateData.picture,
+    PictureFile: `http://localhost:5231/Images/${updateData.picture}`,
     SpotId: updateData.bookingEntries.map((entry) => entry.spotId.toString()),
   });
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
-
+  console.log("picturePreview", picturePreview)
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "PictureFile") {
@@ -83,11 +77,11 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
       );
 
       console.log("Response:", response.data);
-      if (response.status === 200) {
-        console.log("Booking inserted successfully!", response.data);
+      if (response.status !== 0) {
+        console.log("Booking Update successfully!", response.data);
 
         // Display a success toast message
-        toast.success("Booking inserted successfully!", {
+        toast.success("Booking Update successfully!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -110,7 +104,6 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
       toast.error("Failed to insert booking!");
     }
   };
-
 
   const fetchSpotDropdown = async () => {
     try {

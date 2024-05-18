@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Booking from "./components/Booking";
 import './index.css'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,6 +33,7 @@ function App() {
   return (
     <div>
       <RouterProvider router={router}></RouterProvider>
+      <ToastContainer />
     </div>
   );
 }
