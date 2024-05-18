@@ -5,8 +5,7 @@ import { MdOutlineCancel } from "react-icons/md";
 
 const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
   const [spotID, setSpotID] = useState([]);
-  const [picturePreview, setPicturePreview] = useState([]); // Store the picture preview URL
-
+  
   const [formData, setFormData] = useState({
     ClientId: updateData.clientId,
     ClientName: updateData.clientName,
@@ -15,21 +14,27 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
       : "",
     PhoneNo: updateData.phoneNo,
     MaritalStatus: updateData.maritalStatus,
-    // PictureFile: updateData.picture,
     PictureFile: `http://localhost:5231/Images/${updateData.picture}`,
     SpotId: updateData.bookingEntries.map((entry) => entry.spotId.toString()),
   });
+  const [picturePreview, setPicturePreview] = useState([formData?.PictureFile]); // Store the picture preview URL
 
   console.log("picturePreview", picturePreview)
+  console.log("PictureFile", formData?.PictureFile)
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "PictureFile") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: e.target.files[0],
-      }));
-      // Update the picture preview when the user selects a new file
-      setPicturePreview(URL.createObjectURL(e.target.files[0]));
+      if (e.target.files && e.target.files[0]) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: e.target.files[0],
+        }));
+        // Update the picture preview when the user selects a new file
+        setPicturePreview(URL.createObjectURL(e.target.files[0]));
+      } else {
+        // If e.target.files is not available, it means PictureFile is a URL
+        setPicturePreview(value); // Set picturePreview directly to the URL
+      }
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -37,6 +42,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
       }));
     }
   };
+  
 
   const handleAddSpotId = () => {
     setFormData((prevData) => ({
@@ -93,15 +99,10 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
         onHide();
         fetchandGetClients();
       } else {
-        // Handle unsuccessful response
-        console.error("Error inserting booking:", response.data);
-        toast.error("Failed to insert booking!");
+        toast.error("Failed to Update booking!");
       }
     } catch (error) {
-      console.error("Error inserting booking:", error);
-
-      // Handle the error scenario (e.g., show an error toast, alert, etc.)
-      toast.error("Failed to insert booking!");
+      toast.error("Failed to Update booking!");
     }
   };
 
@@ -136,7 +137,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
             <div className="col-span-2 border-2 border-t-0 border-b-0 border-l-0 border-blue-600 px-12">
               {/* START Left Side */}
               {/* Client Name */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Client Name <span className="text-red-700">*</span>
                 </label>
@@ -151,7 +152,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
               </div>
 
               {/* Birth Date */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Birth Date <span className="text-red-700">*</span>
                 </label>
@@ -165,7 +166,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
               </div>
 
               {/* Phone Number */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Phone Number <span className="text-red-700">*</span>
                 </label>
@@ -180,7 +181,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
               </div>
 
               {/* Marital Status */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Marital Status <span className="text-red-700">*</span>
                 </label>
@@ -197,7 +198,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
 
               {/* Picture File */}
               {/* Picture File */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Picture File
                 </label>
@@ -214,7 +215,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
                       <img
                         src={picturePreview}
                         alt="Client Picture"
-                        className="w-40 h-40"
+                        className="w-40 h-28"
                       />
                       {/* Button to remove the image */}
                       <button
@@ -279,7 +280,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
             </div>
           </div>
 
-          <div className="flex justify-end items-center gap-4">
+          <div className="flex justify-end items-center gap-4 -mt-16">
             {/* Submit & Reset Button */}
             <button
               type="reset"
@@ -289,9 +290,9 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
             </button>
             <button
               type="submit"
-              className="flex w-20 justify-center rounded bg-green-600 text-white p-3 font-medium text-gray"
+              className="flex w-20 justify-center rounded bg-yellow-300 text-black p-3 font-medium text-gray"
             >
-              Submit
+              Update
             </button>
           </div>
         </form>

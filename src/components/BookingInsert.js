@@ -127,7 +127,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
             <div className="col-span-2 border-2 border-t-0 border-b-0 border-l-0 border-blue-600 px-12">
               {/* START Left Side */}
               {/* Client Name */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Client Name <span className="text-red-700">*</span>
                 </label>
@@ -142,7 +142,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
               </div>
 
               {/* Birth Date */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Birth Date <span className="text-red-700">*</span>
                 </label>
@@ -156,7 +156,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
               </div>
 
               {/* Phone Number */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Phone Number <span className="text-red-700">*</span>
                 </label>
@@ -171,7 +171,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
               </div>
 
               {/* Marital Status */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Marital Status <span className="text-red-700">*</span>
                 </label>
@@ -187,7 +187,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
               </div>
 
               {/* Picture File */}
-              <div className="w-full mb-4">
+              <div className="w-full mb-2">
                 <label className="block text-black dark:text-white">
                   Picture File
                 </label>
@@ -202,7 +202,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
             </div>
             <div className="col-span-1 px-4">
               {/* Spot Dropdown */}
-              <div className="mb-4 px-2">
+              <div className="mb-2 px-2">
                 <label className="block text-black dark:text-white mb-1">
                   Select Spot <span className="text-red-700">*</span>
                 </label>
@@ -248,7 +248,7 @@ const BookingInsert = ({ onHide, fetchandGetClients }) => {
             </div>
           </div>
 
-          <div className="flex justify-end items-center gap-4">
+          <div className="flex justify-end items-center gap-4 -mt-16">
             {/* Submit & Reset Button */}
             <button
               type="reset"
