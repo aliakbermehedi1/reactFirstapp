@@ -12,7 +12,7 @@ const BookingEdit = ({ onHide, fetchandGetClients, updateData }) => {
     ClientName: updateData.clientName,
     BirthDate: updateData.birthDate
       ? new Date(updateData.birthDate).toISOString().split("T")[0]
-      : "", // Convert birthDate to correct format
+      : "",
     PhoneNo: updateData.phoneNo,
     MaritalStatus: updateData.maritalStatus,
     // PictureFile: updateData.picture,
